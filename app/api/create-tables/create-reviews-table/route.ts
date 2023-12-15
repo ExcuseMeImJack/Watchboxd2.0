@@ -1,13 +1,16 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
-export async function createFriendsTable(request: Request) {
+export async function GET(request: Request) {
   try {
     const result = await sql`
-      CREATE TABLE Friends (
-        friendship_id SERIAL PRIMARY KEY,
+      CREATE TABLE Reviews (
+        review_id SERIAL PRIMARY KEY,
+        review_text TEXT,
+        rating INTEGER,
         user_id INTEGER REFERENCES Users(user_id),
-        friend_id INTEGER REFERENCES Users(user_id)
+        film_id INTEGER REFERENCES FilmsFromAPI(film_id),
+        show_id INTEGER REFERENCES ShowsFromAPI(show_id)
       );
     `;
     return NextResponse.json({ result }, { status: 200 });

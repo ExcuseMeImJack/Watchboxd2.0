@@ -1,12 +1,12 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
-export async function createShowsFromAPITable(request: Request) {
+export async function GET(request: Request) {
   try {
     const result = await sql`
-      CREATE TABLE ShowsFromAPI (
-        show_id SERIAL PRIMARY KEY,
-        api_show_id VARCHAR(255),
+      CREATE TABLE FilmsFromAPI (
+        film_id SERIAL PRIMARY KEY,
+        api_film_id VARCHAR(255),
         title VARCHAR(255),
         year VARCHAR(10),
         rated VARCHAR(20),
@@ -23,8 +23,7 @@ export async function createShowsFromAPITable(request: Request) {
         poster VARCHAR(255),
         imdb_rating VARCHAR(10),
         imdb_votes VARCHAR(20),
-        type VARCHAR(20),
-        total_seasons INTEGER
+        type VARCHAR(20)
       );
     `;
     return NextResponse.json({ result }, { status: 200 });
