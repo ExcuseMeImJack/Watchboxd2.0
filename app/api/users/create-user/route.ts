@@ -19,14 +19,14 @@ export async function GET(request: Request) {
       VALUES (${username}, ${email}, ${hashedPassword}, ${profile_picture}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `;
 
-    const newUser = await sql`
+    const newUserRaw = await sql`
     SELECT * FROM Users
     WHERE username = ${username}
     `;
 
-    const newUserData = newUser?.rows[0] || null;
+    const newUser = newUserRaw?.rows[0] || null;
 
-    return NextResponse.json({ newUserData }, { status: 200 })
+    return NextResponse.json({ User: newUser }, { status: 200 })
 
   } catch(error: any) {
     return NextResponse.json({ error: error.message}, { status: 500});
